@@ -1,0 +1,46 @@
+[project]
+name = "fast-zero"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12.3"
+dependencies = [
+    "fastapi>=0.118.0",
+    "httpx>=0.28.1",
+    "ignr>=2.2",
+    "pytest-cov>=7.0.0",
+    "uvicorn>=0.37.0",
+]
+
+[tool.ruff]
+line-length = 79
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = [ 'I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+
+[tool.taskipy.tasks]
+run = 'uv run uvicorn app.main:app --reload'
+pre_test = "task lint"
+test = "pytest -s"
+test_ver = "pytest -v"
+test_cov = "pytest -s -x -v --cov=app -vv"
+lint = "ruff check . && ruff check . --diff"
+format = "ruff check . --fix && ruff format ."
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=7.0.0",
+    "ruff>=0.13.2",
+    "taskipy>=1.14.1",
+]
