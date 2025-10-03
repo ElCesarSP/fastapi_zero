@@ -8,6 +8,7 @@ dependencies = [
     "fastapi>=0.118.0",
     "httpx>=0.28.1",
     "ignr>=2.2",
+    "pydantic[email]>=2.11.9",
     "pytest-cov>=7.0.0",
     "sqlalchemy>=2.0.43",
     "uvicorn>=0.37.0",
@@ -33,9 +34,10 @@ addopts = '-p no:warnings'
 [tool.taskipy.tasks]
 run = 'uv run uvicorn app.main:app --reload'
 pre_test = "task lint"
-test = "pytest -s"
+test = "pytest -s -x -v"
 test_ver = "pytest -v"
-test_cov = "pytest -s -x -v --cov=app -vv"
+test_cov = "pytest -x -v --cov=app -vv"
+test_html = "pytest --cov=app --cov-report=html"
 lint = "ruff check . && ruff check . --diff"
 format = "ruff check . --fix && ruff format ."
 
