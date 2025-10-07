@@ -1,22 +1,19 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
+from sqlalchemy import select
 
-from app.models import User, table_registry
+from app.models import User
 
 
-def test_create_user():
-    engine = create_engine('sqlite:///database.db')
-    table_registry.metadata.create_all(engine)
+def test_create_user(session):
+    user = User(
+        username='cesar',
+        password='testpassword',
+        email='email@email.com',
+    )
+    session.add(user)
+    session.commit()
 
-    with Session(engine) as session:
-        user = User(
-            username='cesar',
-            password='testpassword',
-            email='email@email.com',
-        )
-        session.add(user)
-        session.commit()
-        session.refresh(user)
+    result = session.scalar(
+        select(User).where(User.email == 'email@email.com')
+    )
 
-        assert user.id == 1
-        assert user.username == 'cesar'
+    assert result.id == 1
