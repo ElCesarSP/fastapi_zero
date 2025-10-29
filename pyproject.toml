@@ -9,10 +9,15 @@ dependencies = [
     "fastapi>=0.118.0",
     "httpx>=0.28.1",
     "ignr>=2.2",
+    "pwdlib[argon2]>=0.2.1",
     "pydantic-settings>=2.11.0",
     "pydantic[email]>=2.11.9",
+    "pyjwt>=2.10.1",
     "pytest-cov>=7.0.0",
+    "python-jose>=3.5.0",
+    "python-multipart>=0.0.20",
     "sqlalchemy>=2.0.43",
+    "tzdata>=2025.2",
     "uvicorn>=0.37.0",
 ]
 
