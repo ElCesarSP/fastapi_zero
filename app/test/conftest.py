@@ -8,6 +8,7 @@ from app.database import get_session
 from app.main import app
 from app.models import User, table_registry
 from app.security import get_password_hast
+from app.settings import Settings
 
 
 @pytest.fixture
@@ -59,8 +60,13 @@ def user(session):
 @pytest.fixture
 def token(client, user):
     response = client.post(
-        '/token',
+        '/auth/token',
         data={'username': user.email, 'password': user.clean_password},
     )
 
     return response.json()['access_token']
+
+
+@pytest.fixture
+def settings():
+    return Settings()
